@@ -1,8 +1,6 @@
 import React, {useState,useEffect} from 'react';
 
 
-
-
 const useValidacion = (stateInicial, validar, fn) => {
 
   const [valores, guardarValores] = useState(stateInicial);
@@ -17,7 +15,7 @@ const useValidacion = (stateInicial, validar, fn) => {
       }
       guardarSubmitForm(false);
     }
-  },[]);
+  },[errores]);
 
   // funcion que se ejecuta conforme el usuario escribe algo
   const handleChange = e =>{

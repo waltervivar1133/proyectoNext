@@ -17,5 +17,6 @@ export default function ValidarCrearCuenta(valores){
     errores.password = "El password debe tener al menos 6 caracteres"
 
   }
+  return errores;
 
 }

@@ -16,6 +16,11 @@ const Navegacion = styled.nav`
         }
     }
 
+    @media (max-width: 525px){
+      display: none;
+      
+    }
+
 `
 const Nav = () => {
   return (  

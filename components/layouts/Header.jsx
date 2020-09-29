@@ -28,6 +28,7 @@ const Logo = styled.p`
     margin-right: 2rem;
 `;
 
+
 const Header = () => {
 
     const usuario = false;
@@ -44,6 +45,7 @@ const Header = () => {
             <div css={css`
                 display:flex;
                 align-items:center;
+                justify-content:center;
             `}>
                 <Link href="/">
                     <Logo>P</Logo>
@@ -57,11 +59,14 @@ const Header = () => {
             <div css={css`
             
                 display:flex;
+             
                 align-items: center;
+                justify-content:center;
             `}
             >
               { usuario ? (
                   <>
+
                      <p
                      css={css`
                          margin-right:1rem;
