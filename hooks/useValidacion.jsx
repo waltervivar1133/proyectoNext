@@ -9,7 +9,7 @@ const useValidacion = (stateInicial, validar, fn) => {
 
   useEffect(() => {
     if(submitForm){
-      const noErrores = Object.keys(error).length === 0;
+      const noErrores = Object.keys(errores).length === 0;
       if(noErrores){
         fn(); // Fn = funcion que se ejecuta en el componente
       }
@@ -34,12 +34,21 @@ const useValidacion = (stateInicial, validar, fn) => {
     guardarErrores(erroresValidacion);
     guardarSubmitForm(true);
   }
+  // cuando se realiza el event de blur
+  const handleBur = () => {
+    const erroresValidacion = validar(valores);
+    guardarErrores(erroresValidacion);
+  }
+
+
+
   return {
     valores,
     errores,
     submitForm,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    handleBur
   }
 }
  
