@@ -10,7 +10,7 @@ import firebase from '../firebase';
 //validaciones
 
 import useValidacion from '../hooks/useValidacion';
-import ValidarCrearCuenta from '../validacion/validar';
+import ValidarCrearCuenta from '../validacion/ValidarCrearCuenta';
 
 
 const CentradoTotal = styled.div`
