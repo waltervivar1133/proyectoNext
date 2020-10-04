@@ -1,10 +1,14 @@
 
 
 import Layout from '../components/layouts/Layout'
+import React ,{useEffect , useState, useContext}from 'react';
+import {FirebaseContext} from '../firebase';
 
 
-export default function Home() {
+const Home= () => {
 
+
+  
   return (
     <div>
       <Layout>
@@ -15,3 +19,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;
