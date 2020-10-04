@@ -38,7 +38,14 @@ const Login = () => {
   const {  email, password } = valores;
 
   async function iniciarSesion(){
-    console.log('iniciar sesion')
+    try {
+     const usuario = await firebase.login(email, password);
+      Router.push('/');
+      console.log(usuario);
+    } catch (error) {
+      console.log('Hubo un error en incicar sesion', error.message);
+      guardarError(error.message);
+    }
   }
   return ( 
     <Layout>

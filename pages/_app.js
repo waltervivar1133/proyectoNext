@@ -1,10 +1,11 @@
 import '../styles/globals.css';
 import App from 'next/app';
+import useAutenticacion from '../hooks/useAutenticacion';
 
 import firebase , {FirebaseContext} from '../firebase'
 
 const MyApp = props => {
-
+  const usuario = useAutenticacion();
   const {Component, pageProps } = props;
 
   return(
@@ -12,7 +13,8 @@ const MyApp = props => {
     <>
     <FirebaseContext.Provider
       value={{
-        firebase
+        firebase,
+        usuario
       }}
     >
       <Component {...pageProps} />
