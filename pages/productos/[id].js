@@ -6,7 +6,18 @@ import Layout from '../../components/layouts/Layout';
 import {css} from '@emotion/core';
 import styled from '@emotion/styled';
 import Loader from '../../components/ui/Loader'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';  // para la hora
+import {es } from 'date-fns/locale';
+import {Campo , InputSubmit} from '../../components/ui/Formulario';
+import Boton from '../../components/ui/Boton';
 
+const ContenedorProducto = styled.div`
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 2rem;
+  }
+`;
 
 const Producto = () => {
   // state del componente 
@@ -20,7 +31,7 @@ const Producto = () => {
   const {query : {id} } = router;
   // console.log(id);
 
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, usuario } = useContext(FirebaseContext);
 
   useEffect(() => {
     if(id){
@@ -38,8 +49,8 @@ const Producto = () => {
   }, [id])
 
   if(Object.keys(producto).length === 0) return <Loader/>
-  
-  const { nombre } = producto;
+
+  const { comentarios, creado, descripcion , empresa , nombre, url, urlimagen , votos, creador  } = producto
   return ( 
       <Layout>
         <>
@@ -52,6 +63,63 @@ const Producto = () => {
             `}>
               {nombre}
             </h1>
+            <ContenedorProducto>
+                <div>
+                <p>Publicado hace : {formatDistanceToNow (new Date(creado), {locale:es}) }</p>
+                <img src={urlimagen}/>
+                <p>{descripcion}</p>
+                <p>Creado por <span css={css`
+                  font-weight:700;
+                  font-style: italic;
+                `}>{creador.nombre}</span>  de <span css={css`
+                  font-weight:700;
+                  font-style: italic;
+                `}>{empresa} </span>  </p>
+
+                <h2>Agrega tu comentario</h2>
+               {usuario  && (
+                 <>
+                  <h2 css={css`
+                  margin: 2rem 0;
+                `}>Comentarios</h2>
+                  <form>
+                   
+                  <Campo>
+                      <input type="text"
+                      name ="mensaje"
+                      placeholder="Ingresa tu comentario"/>
+                  </Campo>
+                  <InputSubmit type="submit"
+                  value="Agregar Comentario"/>
+                </form>
+                </>
+               )}
+                
+                {comentarios.map(comentario=>(
+                  <li>
+                    <p>{comentario.nombre}</p>
+                    <p>escrito por: {comentario.usuarioNombre}</p>
+                  </li>
+                ))}
+                </div>
+                <aside>
+                  <Boton
+                    target="_blank"
+                    bgColor="true"
+                    href={url}>
+                    Visitar Url
+                  </Boton>
+                  <p css={css`
+                    text-align:center;
+                  `}>Votos {votos}</p>
+                  <Boton
+                   
+                  >
+                    Votar
+                  </Boton>
+                </aside>
+            </ContenedorProducto>
+
         </div>
         </>
        
