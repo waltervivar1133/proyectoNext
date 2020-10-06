@@ -5,6 +5,7 @@ import React ,{useEffect , useState, useContext}from 'react';
 import {FirebaseContext} from '../firebase';
 //components
 import DetallesProducto from '../components/layouts/DetalleProducto'
+import Loader from '../components/ui/Loader';
 
 
 
@@ -35,7 +36,9 @@ function manejarSnapshot(snapshot){
   return (
     <div>
       <Layout>
-        <div className="listado-productos">
+          {Object.keys(productos).length === 0 ? <Loader/>
+          :
+            (<div className="listado-productos">
             <div className="contenedor">
               <ul className="bg-white">
                   {productos.map(producto =>(
@@ -46,7 +49,7 @@ function manejarSnapshot(snapshot){
                   ))}
               </ul>
             </div>
-        </div>
+        </div>)}
       </Layout>
      
      

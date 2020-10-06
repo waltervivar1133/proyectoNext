@@ -81,7 +81,8 @@ const NuevoProducto = () => {
         id : usuario.uid,
         nombre : usuario.displayName
 
-      }
+      },
+      votado : []
     }
 
 
