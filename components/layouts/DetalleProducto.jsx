@@ -4,6 +4,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';  // para la hora
 import {es } from 'date-fns/locale'
 import Link from 'next/link';
 
+
 const Producto = styled.li`
     padding: 4rem;
     display: flex;
@@ -91,7 +92,9 @@ const DetallesPorducto = ({producto}) => {
                 <Imagen src={urlimagen} alt=""/>
             </div>
             <div>
+                <Link href="/productos/[id]" as ={`/productos/${id}`}>
                <Titulo>{nombre}</Titulo>
+               </Link>
                <TextoDescripcion>{descripcion}</TextoDescripcion>
                <Comentarios>
                  <div>

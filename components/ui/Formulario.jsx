@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Formulario = styled.form`
 
   width: 50%;
-  margin: 5rem auto 0 auto;
+  height:auto;
   @media(max-width:1200px){
     width: 70%;
   }

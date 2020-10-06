@@ -14,8 +14,8 @@ import ValidarCrearCuenta from '../validacion/ValidarIniciarSesion';
 
 const CentradoTotal = styled.div`
 display : flex;
-witdh: 100vw;
-heigth: 100vh;
+width: 100%;
+height: 50vh;
 align-items: center;
 justify-content:center;
 

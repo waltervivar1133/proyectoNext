@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import Header from './Header';
 import {Global,css} from '@emotion/core';
 import Head from 'next/head';
@@ -52,6 +51,10 @@ const Layout = (props) => {
         }
         a{
           text-decoration: none;
+        }
+        input {
+          width: 100%;
+          display: block;
         }
       `}
     
