@@ -64,7 +64,7 @@ const Producto = () => {
     if(votado.includes(usuario.uid)) return ;
 
     // guardar el id del usuario que ha votado
-    const votados = [ ...votado , usuario.uid]
+    const votados = [ ...votado , usuario.uid];
 
     // actualizar la bd
 
@@ -73,7 +73,8 @@ const Producto = () => {
     // actualizar state
     guardarProducto({
       ...producto,
-      votos : nuevoTotal
+      votos : nuevoTotal,
+      votado: votados
     })
 
   }
