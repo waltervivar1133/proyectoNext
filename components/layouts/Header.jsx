@@ -27,6 +27,9 @@ const Logo = styled.p`
     font-family: 'Roboto Slab', serif;
     font-weight:700;
     margin-right: 2rem;
+    :hover{
+        cursor: pointer;
+    }
 `;
 
 

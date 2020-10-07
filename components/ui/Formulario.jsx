@@ -65,6 +65,4 @@ export const Error = styled.p`
     text-transform: uppercase;
     margin: 1rem 0;
     border-radius: 0.5rem;
-  
-
 `;
