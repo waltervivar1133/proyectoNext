@@ -1,4 +1,4 @@
-import React ,{useEffect, useState, useContext}from 'react';
+import React ,{useEffect, useState, useContext }from 'react';
 import {useRouter}  from 'next/router';
 import {FirebaseContext} from '../../firebase';
 import Error404 from '../../components/layouts/404';
@@ -24,7 +24,8 @@ const Producto = () => {
 
   const [producto , guardarProducto] = useState({});
   const [error, guardarError] =useState(false);
-
+  const [comentario , guardarComentario]  = useState({});
+  const [active , guardarActive] =useState(true);
   // para obtener el id de userouter
   const router = useRouter();
 
@@ -32,6 +33,8 @@ const Producto = () => {
   // console.log(id);
 
   const { firebase, usuario } = useContext(FirebaseContext);
+
+  
 
   useEffect(() => {
     if(id){
@@ -78,6 +81,41 @@ const Producto = () => {
     })
 
   }
+
+  const comentarioChange = e => {
+    guardarComentario({
+      ...comentario,
+      [e.target.name] : e.target.value
+    })
+  }
+
+  const agregarComentario = e => {
+    e.preventDefault();
+    if(!usuario){
+      return router.push('/login');
+    }
+
+    //comentario extra
+
+    comentario.usuarioId = usuario.uid;
+    comentario.usuarioNombre = usuario.displayName;
+
+    // tomar copia de los comentarios y agregarlos
+
+    const nuevosComentarios = [ ...comentarios , comentario]
+
+    //actualizar BD
+    firebase.db.collection('productos').doc(id).update({
+      comentarios: nuevosComentarios
+    })
+
+    // actualizar el state
+
+    guardarProducto({
+      ...producto,
+      comentarios: nuevosComentarios
+    })
+  }
   return ( 
       <Layout>
         <>
@@ -106,31 +144,51 @@ const Producto = () => {
                 font-style: italic;
               `}>{empresa} </span>  </p>
 
-              <h2>Agrega tu comentario</h2>
+              
              {usuario  && (
                <>
-                <h2 css={css`
-                margin: 2rem 0;
-              `}>Comentarios</h2>
-                <form>
+               <h2>Agrega tu comentario</h2>
+               
+                <form onSubmit={agregarComentario}>
                  
                 <Campo>
                     <input type="text"
                     name ="mensaje"
-                    placeholder="Ingresa tu comentario"/>
+                    placeholder="Ingresa tu comentario"
+                    onChange={comentarioChange}
+                    />
                 </Campo>
-                <InputSubmit type="submit"
-                value="Agregar Comentario"/>
+                
+                 <InputSubmit 
+                 type="submit"
+                  value="Agregar comentario"
+                />  
               </form>
               </>
              )}
+             <h2 css={css`
+                margin: 2rem 0;
+              `}>Comentarios</h2>
+              {comentarios.length === 0 ? "Aun no hay Comentarios" : (
+                <ul>
+                {comentarios.map((comentario, i)=>(
+                  
+                      <li
+                        key={`${comentario.usuarioId}-${i}`}
+                        css={css`
+                          border: 1px solid #e1e1e1;
+                          padding: 1.5rem;
+                        `}
+                        >
+                        <p>{comentario.mensaje}</p>
+                        <p>escrito por: <span css={css`
+                        font-weight:bold`
+                      }>{comentario.usuarioNombre}</span></p>
+                      </li>
+                ))}
+                </ul>
+              )}
               
-              {comentarios.map(comentario=>(
-                <li>
-                  <p>{comentario.nombre}</p>
-                  <p>escrito por: {comentario.usuarioNombre}</p>
-                </li>
-              ))}
               </div>
               <aside>
                 <Boton
@@ -146,6 +204,7 @@ const Producto = () => {
                 { usuario && (
                 <Boton
                   onClick={votarProducto}
+      
                  >
                    Votar
                  </Boton>)}
