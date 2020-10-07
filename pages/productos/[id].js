@@ -19,13 +19,23 @@ const ContenedorProducto = styled.div`
   }
 `;
 
+const CreadorProducto = styled.p`
+  padding: .5rem 2rem;
+  background-color : #DA552F;
+  color: #fff;
+  text-transform : uppercase;
+  font-weight : bold;
+  display: inline-block;
+  text-align:center;
+`;
+
 const Producto = () => {
   // state del componente 
 
   const [producto , guardarProducto] = useState({});
   const [error, guardarError] =useState(false);
   const [comentario , guardarComentario]  = useState({});
-  const [active , guardarActive] =useState(true);
+  const [consultarDB, guardarConsultarDB] = useState(true);
   // para obtener el id de userouter
   const router = useRouter();
 
@@ -37,19 +47,22 @@ const Producto = () => {
   
 
   useEffect(() => {
-    if(id){
+    if(id && consultarDB){
         const ObtenerProducto = async () => {
           const productoQuery = await firebase.db.collection('productos').doc(id);
           const producto = await productoQuery.get();
           if(producto.exists){
             guardarProducto(producto.data());
+            guardarConsultarDB(false)
           }else {
             guardarError(true);
+            guardarConsultarDB(false)
+
           }
         }
         ObtenerProducto()
     }
-  }, [id, producto])
+  }, [id])
 
 
 
@@ -80,6 +93,7 @@ const Producto = () => {
       votado: votados
     })
 
+    guardarConsultarDB(true);
   }
 
   const comentarioChange = e => {
@@ -88,6 +102,14 @@ const Producto = () => {
       [e.target.name] : e.target.value
     })
   }
+
+  // indentifca si el comentario es del creador del producto
+  const esCreador = id => {
+    if(creador.id == id){
+      return true;
+    }
+  }
+
 
   const agregarComentario = e => {
     e.preventDefault();
@@ -115,13 +137,40 @@ const Producto = () => {
       ...producto,
       comentarios: nuevosComentarios
     })
+    guardarConsultarDB(true);
+  }
+
+  const BorrarProducto = () => {
+    if(!usuario ){
+      return false;
+    }
+    if(creador.id === usuario.uid){
+      return true;
+    }
+
+  }
+  const eliminarProducto = async() => {
+
+    if(!usuario){
+      return router.push('/login');
+    }
+    if(creador.id !== usuario.uid){
+      return router.push('/');
+    }
+
+    try {
+     await firebase.db.collection('productos').doc(id).delete();
+     router.push('/')
+    } catch (error) {
+      console.log(error);
+    }
   }
   return ( 
       <Layout>
         <>
         { error && <Error404/>}
 
-        { Object.keys(producto).length === 0 ? <Loader/> :
+        { Object.keys(producto).length === 0  ? <Loader/> :
         (
 
           <div className="contenedor">
@@ -182,8 +231,9 @@ const Producto = () => {
                         >
                         <p>{comentario.mensaje}</p>
                         <p>escrito por: <span css={css`
-                        font-weight:bold`
+                        font-weight:bold;`
                       }>{comentario.usuarioNombre}</span></p>
+                      { esCreador (comentario.usuarioId) && <CreadorProducto>Es Creador</CreadorProducto>}
                       </li>
                 ))}
                 </ul>
@@ -211,7 +261,10 @@ const Producto = () => {
                 
               </aside>
           </ContenedorProducto>
-
+                  {BorrarProducto() && 
+                  <Boton
+                    onClick={eliminarProducto}
+                  >Eliminar Producto</Boton> }
       </div>
         )}
         </>

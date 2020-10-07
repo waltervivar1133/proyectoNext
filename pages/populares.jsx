@@ -1,12 +1,40 @@
-import React from 'react';
-import Layout from '../components/layouts/Layout'
 
-const Populares = () => {
-  return ( 
-    <Layout>
-        <h1>Populares</h1>
-    </Layout>
-   );
+
+import Layout from '../components/layouts/Layout'
+import React from 'react';
+
+//components
+import DetallesProducto from '../components/layouts/DetalleProducto'
+import Loader from '../components/ui/Loader';
+import useProductos from '../hooks/useProductos';
+
+
+
+const Populares= () => {
+
+const {productos} = useProductos('votos')
+  return (
+    <div>
+      <Layout>
+          {Object.keys(productos).length === 0 ? <Loader/>
+          :
+            (<div className="listado-productos">
+            <div className="contenedor">
+              <ul className="bg-white">
+                  {productos.map(producto =>(
+                    <DetallesProducto
+                      key = {producto.id}
+                      producto = {producto}
+                    />
+                  ))}
+              </ul>
+            </div>
+        </div>)}
+      </Layout>
+     
+     
+    </div>
+  )
 }
- 
+
 export default Populares;
