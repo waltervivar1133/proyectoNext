@@ -5,7 +5,7 @@ import Router from 'next/router'
 import styled from '@emotion/styled';
 import Layout from '../components/layouts/Layout';
 import {Formulario, Campo , InputSubmit , Error} from '../components/ui/Formulario';
-import firebase from '../firebase';
+import firebase from '../firebaseDatos';
 
 //validaciones
 

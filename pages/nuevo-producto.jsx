@@ -5,7 +5,7 @@ import Router, {useRouter} from 'next/router'
 import styled from '@emotion/styled';
 import Layout from '../components/layouts/Layout';
 import {Formulario, Campo , InputSubmit , Error} from '../components/ui/Formulario';
-import {FirebaseContext} from '../firebase';
+import {FirebaseContext} from '../firebaseDatos';
 import FileUploader from 'react-firebase-file-uploader';
 import Link from 'next/link';
 import Boton from '../components/ui/Boton'

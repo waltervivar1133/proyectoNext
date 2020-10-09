@@ -1,6 +1,6 @@
 import React ,{useEffect, useState, useContext }from 'react';
 import {useRouter}  from 'next/router';
-import {FirebaseContext} from '../../firebase';
+import {FirebaseContext} from '../../firebaseDatos';
 import Error404 from '../../components/layouts/404';
 import Layout from '../../components/layouts/Layout';
 import {css} from '@emotion/core';

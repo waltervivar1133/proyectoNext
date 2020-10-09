@@ -6,7 +6,7 @@ import {css} from '@emotion/core';
 import Buscar from '../ui/Buscar';
 import Nav from './Nav';
 import Boton from '../ui/Boton';
-import {FirebaseContext} from '../../firebase'
+import {FirebaseContext} from '../../firebaseDatos'
 
 
 
