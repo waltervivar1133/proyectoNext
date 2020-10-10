@@ -29,7 +29,7 @@ const CreadorProducto = styled.p`
   text-align:center;
 `;
 
-const Producto = () => {
+const productos = () => {
   // state del componente 
 
   const [producto , guardarProducto] = useState({});
@@ -274,4 +274,4 @@ const Producto = () => {
    );
 }
  
-export default Producto;
+export default productos;
